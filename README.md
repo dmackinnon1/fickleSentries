@@ -23,5 +23,8 @@ A puzzle may be something like:
 Using this information, you must determine the contents of the cave.
 
 ## Building the Puzzles
-
+In the build folder there is a Python script to generate the puzzles.
+```
+python fickleSentries.py
+> There were 266 puzzles generated
 ```
