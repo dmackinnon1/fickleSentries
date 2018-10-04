@@ -7,8 +7,6 @@ Scripts and interface for a set of logic puzzles similar to those of Raymond Smu
 
 ## Overview
 
-This notebook explores a set of logic puzzles inspired by some puzzle types found in Raymond Smullyan's "The Lady or the Tiger?" and "What is the Name of this Book?".
-
 The "Fickle Sentries" is a puzzle type that both 'lady or tiger' and 'lion and unicorn' puzzles have a strong family resemblance to, illustrating how those two puzzle types are closely related.
 
 The setup of the puzzle is as follows:
@@ -24,3 +22,6 @@ A puzzle may be something like:
 
 Using this information, you must determine the contents of the cave.
 
+## Building the Puzzles
+
+```
