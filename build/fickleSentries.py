@@ -3,9 +3,9 @@
 #
 
 #set up the sets used in the puzzle
-allTreasures = ['silver', 'gold', 'platinum', 'diamonds']
-guard1_lies = ['silver', 'gold']
-guard2_lies = ['platinum', 'diamonds']
+allTreasures = ['copper','silver', 'gold', 'platinum', 'diamonds','rubies']
+guard1_lies = ['copper','silver', 'gold']
+guard2_lies = ['platinum', 'diamonds','rubies']
 # given a list of treasures, what treasures are missing
 def complement(listOfTreasure):
     return [treasure for treasure in allTreasures if treasure not in listOfTreasure]
@@ -59,6 +59,8 @@ for t in allTreasures:
     annotatedStatements.append(moreValuableStatement(t))
     annotatedStatements.append(lessValuableStatement(t))
     for s in allTreasures:
+        if (s == t):
+            continue
         annotatedStatements.append(compoundStatement(t,s))
 
 def validPuzzle(g1_statement, g2_statement):
