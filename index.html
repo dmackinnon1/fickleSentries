@@ -50,7 +50,6 @@ $(document).ready(function(){
 	console.log("about to fetch remote data");
 	$.getJSON("data/fickle.json", function(data){
 		puzzleData = data;
-		console.log(puzzleData);
 	}).done(function() {
 		initialize();
 		set();
