@@ -50,7 +50,7 @@ def lessValuableStatement(treasure):
     return {'statement': "The treasure is less valuable than " + treasure +".", 'items': lessValuable(treasure)}
 
 def compoundStatement(t1, t2):
-    return {'statement': "The treasure is either " + t1 +" or " + t2 + "." , 'items': [[t1,t2]]}
+    return {'statement': "The treasure is either " + t1 +" or " + t2 + "." , 'items': [t1,t2]}
     
 annotatedStatements = []
 for t in allTreasures:
@@ -77,14 +77,87 @@ def validPuzzle(g1_statement, g2_statement):
     if (len(hiddenTreasure) != 1):
         return puzzle
     puzzle['guard1']= g1_statement['statement']
+    puzzle['guard1_items'] = str(g1_statement['items'])
+    puzzle['guard1_options'] = str(guard1)
+    puzzle['guard2_items'] = str(g2_statement['items'])
     puzzle['guard2']= g2_statement['statement']
+    puzzle['guard2_options'] = str(guard2)
     puzzle['solution'] = hiddenTreasure[0]
+    puzzle['explanation'] = explain(g1t, g1l, g2t,g2l, hiddenTreasure[0])
     return puzzle
 
+def prettyList(list, conj):
+    isFirst = True;
+    result = ""
+    count = 1
+    size = len(list)
+    for s in list:
+        if not isFirst and size > 2:
+            result += ", "
+        isFirst  = False
+        if count == size and size > 1:
+            if (size == 2):
+                result += " "
+            result += conj + " "
+        count = count +1
+        result += s
+    return result
+
+def explain(g1t, g1l, g2t, g2l, sol):
+    exp = ""
+    if (len(g1t) != 0):
+        exp += "If Guard 1 is telling the truth, then the treasure "
+        if (len(g1t) == 1):
+            exp += "must be "
+        else:
+            exp += "can be "
+        exp += prettyList(g1t,"or") +"."
+    else :
+        exp += "Because Guard 1 lies when guarding " + prettyList(guard1_lies,"and")
+        exp += ", she cannot be telling the truth."    
+    if (len(g1l) != 0):
+        exp += " If Guard 1 is lying, then the treasure "
+        if (len(g1l) == 1):
+            exp += "must be "
+        else:
+            exp += "can be "
+        exp += prettyList(g1l,"or") + "."
+     
+    if (len(g2t) != 0):
+        exp += " If Guard 2 is telling the truth, then the treasure "
+        if (len(g2t) == 1):
+            exp += "must be "
+        else:
+            exp += "can be "
+        exp += prettyList(g2t,"or") +"."
+    else :
+        exp += " Because Guard 2 lies when guarding " + prettyList(guard2_lies,"and")
+        exp += ", she cannot be telling the truth."    
+    if (len(g2l) != 0):
+        exp += " If Guard 2 is lying, then the treasure "
+        if (len (g2l) == 1):
+            exp += "must be "
+        else:
+            exp += "can be "
+        exp += prettyList(g2l,"or") + "."
+
+    exp += " The  only possible option based on the " 
+    exp += "statements of both guards is " + sol + "."
+    return exp 
+
 def jsonForPuzzle(puzzle):
-    json = '{"guard1": "' + puzzle['guard1'] + '",' 
-    json += ' "guard2": "' + puzzle['guard2'] + '",' 
-    json += ' "solution": "' + puzzle['solution'] + '"}' + '\n'
+
+    json = '{"guard1": "' + puzzle['guard1'] + '", ' 
+    json += ' "guard2": "' + puzzle['guard2'] + '", ' 
+    json += ' "guard1_options": "' + puzzle['guard1_options'] + '", ' 
+    json += ' "guard2_options": "' + puzzle['guard2_options'] + '", ' 
+    json += ' "guard1_items": "' + puzzle['guard1_items'] + '", ' 
+    json += ' "guard2_items": "' + puzzle['guard2_items'] + '", ' 
+    
+    json += ' "solution": "' + puzzle['solution'] + '", '
+    json += ' "explanation": "' + puzzle['explanation'] + '", '
+   
+    json += ' "id": "' + str(puzzle['id']) + '"}' + '\n'
     return json
 
 counter = 0
